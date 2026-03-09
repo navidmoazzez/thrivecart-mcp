@@ -1,0 +1,28 @@
+{
+  "name": "thrivecart-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.mjs",
+  "bin": "index.mjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1"
+  },
+  "license": "AGPL-3.0",
+  "author": "Navid Moazzez",
+  "homepage": "https://navid.me",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thenavidm/thrivecart-mcp"
+  },
+  "keywords": [
+    "mcp",
+    "thrivecart",
+    "ecommerce",
+    "mcp-server"
+  ],
+  "files": [
+    "index.mjs",
+    "README.md",
+    "LICENSE"
+  ]
+}
