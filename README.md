@@ -189,6 +189,20 @@ For Claude Desktop, upload the skill through the Desktop interface.
 
 Not publicly documented. Avoid excessive `fetch_all` calls in quick succession.
 
+## Claude skill
+
+A Claude skill is available for this MCP server. Skills teach Claude how to use the tools effectively with workflows, key concepts, and best practices specific to ThriveCart.
+
+Get the skill from the [claude-skills](https://github.com/thenavidm/claude-skills) repo. Copy the skill folder into your project:
+
+```
+.claude/skills/thrivecart/
+  SKILL.md
+  references/
+```
+
+Claude will automatically pick up the skill and use it when working with ThriveCart.
+
 ## License
 
 AGPL-3.0 - Copyright (C) 2026 [Navid Moazzez](https://navid.me) | [CreatorSchool.ai](https://creatorschool.ai)

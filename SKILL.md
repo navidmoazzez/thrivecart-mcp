@@ -26,7 +26,7 @@ Follow the setup in [references/setup.md](references/setup.md) to configure auth
 
 **Base URL:** `https://thrivecart.com/api/external` (NOT `api.thrivecart.com`)
 
-For setup instructions, see `references/setup.md`.
+For setup instructions, see the [README](README.md).
 
 ## MCP tools reference
 
