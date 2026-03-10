@@ -20,9 +20,9 @@ A custom MCP server wraps ThriveCart's REST API into 20 tools. Unlike Kit (which
 
 The server handles authentication, pagination, and client-side filtering automatically.
 
-## Authentication (already configured)
+## Authentication
 
-Auth is handled automatically. Do NOT ask the user for an API key. Just use the MCP tools directly.
+Follow the setup in [references/setup.md](references/setup.md) to configure authentication. Once set up, Claude uses the API key automatically.
 
 **Base URL:** `https://thrivecart.com/api/external` (NOT `api.thrivecart.com`)
 
@@ -182,7 +182,7 @@ You can cross-reference data: use ThriveCart tools for revenue/transaction detai
 A bundled script can fetch recent sales data:
 
 ```bash
-python3 ~/navid-workspace/.claude/skills/thrivecart/scripts/tc_stats.py <api-key>
+python3 scripts/tc_stats.py <api-key>
 ```
 
 Returns charges, refunds, top products, and monthly revenue breakdown.
