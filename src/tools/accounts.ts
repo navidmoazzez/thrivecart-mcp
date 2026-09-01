@@ -53,6 +53,3 @@ const whoami = defineTool({
 
 export const accountTools: AnyToolSpec[] = [listAccounts, whoami] as unknown as AnyToolSpec[];
 
-// Referenced so the zod import is not flagged when this module gains a
-// schema-carrying tool; kept explicit rather than removed and re-added.
-export type { z };
