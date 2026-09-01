@@ -1,5 +1,9 @@
 # Versions
 
+## 2.0.1
+
+Documentation only. Removed em dashes throughout, numbered the FAQ section, and corrected the authorship line and its placement. No code or tool changes.
+
 ## 2.0.0
 
 Complete rewrite in TypeScript. The 1.x server was a single `index.mjs` holding one API key.
