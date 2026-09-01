@@ -5,7 +5,7 @@
  * account vintages: an amount arrives as `amount` or `total`, a date as `date`
  * or `created_at`, a product name as `item_name` or `product_name`. Reading
  * those keys inline at each call site is how a revenue total silently comes
- * back as zero — `parseFloat(undefined)` is NaN, and NaN added to a running sum
+ * back as zero. `parseFloat(undefined)` is NaN, and NaN added to a running sum
  * poisons the whole figure without ever throwing.
  *
  * So every read of those fields goes through here, and money is summed in

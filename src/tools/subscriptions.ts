@@ -43,7 +43,7 @@ const resumeSubscription = defineTool({
   name: "resume_subscription",
   title: "Resume a subscription",
   description:
-    "Resume a paused subscription, restarting billing. The counterpart to pause_subscription. This cannot revive a cancelled subscription — once cancelled, the customer has to buy again.",
+    "Resume a paused subscription, restarting billing. The counterpart to pause_subscription. This cannot revive a cancelled subscription. Once cancelled, the customer has to buy again.",
   schema: { ...orderIdArg, ...accountArg },
   risk: "write" as const,
   idempotent: true,
@@ -60,7 +60,7 @@ const cancelSubscription = defineTool({
   name: "cancel_subscription",
   title: "Cancel a subscription",
   description:
-    "Cancel a customer's subscription permanently. This ends their access and cannot be undone from here — the only way back is for them to purchase again, so pause_subscription is the right tool whenever the customer might return. Refuses to run without confirm: true. Set that only when the person you are working for has actually asked for this cancellation, not to clear the refusal.",
+    "Cancel a customer's subscription permanently. This ends their access and cannot be undone from here. The only way back is for them to purchase again, so pause_subscription is the right tool whenever the customer might return. Refuses to run without confirm: true. Set that only when the person you are working for has actually asked for this cancellation, not to clear the refusal.",
   schema: { ...orderIdArg, ...confirmArg, ...accountArg },
   risk: "destructive" as const,
   summary: ({ order_id, account }) =>

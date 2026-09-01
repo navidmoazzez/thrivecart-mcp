@@ -25,7 +25,7 @@ Read-only is the right setting for any agent you are not supervising.
 
 ## Running over HTTP
 
-`--http` binds `127.0.0.1` by default, deliberately. Before changing `THRIVECART_HTTP_HOST`, set `THRIVECART_HTTP_TOKEN` — otherwise anyone who can reach the port can refund your customers.
+`--http` binds `127.0.0.1` by default, deliberately. Before changing `THRIVECART_HTTP_HOST`, set `THRIVECART_HTTP_TOKEN`. Otherwise anyone who can reach the port can refund your customers.
 
 The transport is stateless: one transport per request, closed with the response, so there is no session table to leak or grow.
 

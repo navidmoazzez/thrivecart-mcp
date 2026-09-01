@@ -14,7 +14,7 @@ const searchAffiliates = defineTool({
   name: "search_affiliates",
   title: "List affiliates",
   description:
-    "List affiliates on a ThriveCart account, one page at a time. Use get_affiliate for one affiliate's full stats — this listing is for browsing and counting.",
+    "List affiliates on a ThriveCart account, one page at a time. Use get_affiliate for one affiliate's full stats. This listing is for browsing and counting.",
   schema: { ...pageArgs, ...accountArg },
   risk: "read" as const,
   handler: async ({ page, per_page, account }, ctx) => {
@@ -31,7 +31,7 @@ const getAffiliate = defineTool({
   name: "get_affiliate",
   title: "Get an affiliate",
   description:
-    "Get one affiliate's full record by email — their referrals, commissions and payout details. Email is the only way ThriveCart identifies an affiliate.",
+    "Get one affiliate's full record by email: their referrals, commissions and payout details. Email is the only way ThriveCart identifies an affiliate.",
   schema: {
     email: z.string().describe("The affiliate's email address."),
     ...accountArg,
@@ -48,7 +48,7 @@ const createAffiliate = defineTool({
   name: "create_affiliate",
   title: "Create an affiliate",
   description:
-    "Register a new affiliate on a ThriveCart account. Check with get_affiliate first — creating one that already exists is not a no-op and ThriveCart may reject it or duplicate the record.",
+    "Register a new affiliate on a ThriveCart account. Check with get_affiliate first, because creating one that already exists is not a no-op and ThriveCart may reject it or duplicate the record.",
   schema: {
     email: z.string().describe("The affiliate's email address. This becomes their identity."),
     first_name: z.string().optional().describe("First name."),

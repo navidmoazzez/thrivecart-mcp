@@ -59,20 +59,20 @@ Configuring a second cart with the first cart's key. Both work, both return data
 
 | Variable | Default | What it does |
 |---|---|---|
-| `THRIVECART_API_KEY` | — | One key, the simple case |
+| `THRIVECART_API_KEY` | (none) | One key, the simple case |
 | `THRIVECART_ACCOUNT_NAME` | `default` | What to call that single cart |
-| `THRIVECART_ACCOUNTS` | — | JSON array. Wins over the single key |
+| `THRIVECART_ACCOUNTS` | (none) | JSON array. Wins over the single key |
 | `THRIVECART_DEFAULT_ACCOUNT` | first | Which cart answers when none is named |
 | `THRIVECART_READ_ONLY` | `0` | `1` removes every write tool |
 | `THRIVECART_ALLOW_DESTRUCTIVE` | `1` | `0` blocks cancel and refund only |
-| `THRIVECART_AUDIT_LOG` | — | Path for a write log, mode `0600` |
+| `THRIVECART_AUDIT_LOG` | (none) | Path for a write log, mode `0600` |
 | `THRIVECART_REQUEST_TIMEOUT_MS` | `30000` | Per-request deadline |
 | `THRIVECART_MIN_REQUEST_INTERVAL_MS` | `120` | Spacing between requests |
 | `THRIVECART_MAX_RETRIES` | `3` | Retries on 429 and 5xx |
 | `THRIVECART_MAX_PAGES` | `100` | Ceiling when walking transactions |
 | `THRIVECART_HTTP_PORT` | `8788` | For `--http` |
 | `THRIVECART_HTTP_HOST` | `127.0.0.1` | For `--http` |
-| `THRIVECART_HTTP_TOKEN` | — | Bearer token required by `--http` |
+| `THRIVECART_HTTP_TOKEN` | (none) | Bearer token required by `--http` |
 
 ## Raising the page ceiling
 

@@ -12,7 +12,7 @@ const listAccounts = defineTool({
   name: "list_accounts",
   title: "List accounts",
   description:
-    "List every ThriveCart account configured on this server. Use a returned name as the `account` argument on any other tool to choose which cart it reads or acts on. Costs no network call. Call this first whenever a request could plausibly mean more than one cart — revenue, customers and affiliates are entirely separate per cart, and a figure from one never includes another.",
+    "List every ThriveCart account configured on this server. Use a returned name as the `account` argument on any other tool to choose which cart it reads or acts on. Costs no network call. Call this first whenever a request could plausibly mean more than one cart. Revenue, customers and affiliates are entirely separate per cart, and a figure from one never includes another.",
   schema: {},
   risk: "read" as const,
   handler: async (_args, ctx) => {
@@ -41,7 +41,7 @@ const whoami = defineTool({
   name: "whoami",
   title: "Show the connected cart",
   description:
-    "Fetch the ThriveCart account this key belongs to — the owner email and account details. Use it to confirm a configured name actually points at the cart you think it does before reporting money against it, and to check a key still works.",
+    "Fetch the ThriveCart account this key belongs to, including the owner email and account details. Use it to confirm a configured name actually points at the cart you think it does before reporting money against it, and to check a key still works.",
   schema: { ...accountArg },
   risk: "read" as const,
   handler: async ({ account }, ctx) => {

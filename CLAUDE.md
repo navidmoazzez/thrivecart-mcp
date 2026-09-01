@@ -30,7 +30,7 @@ printf '%s\n%s\n' \
 | `src/tools/` | One module per group; `kit.ts` is the shared plumbing |
 | `src/transport/http.ts` | The `--http` server |
 
-A new tool goes in the matching `src/tools/` module via `defineTool`, then into `ALL_TOOLS`. `kit.ts` handles annotations, guarding and error shaping — do not hand-roll those.
+A new tool goes in the matching `src/tools/` module via `defineTool`, then into `ALL_TOOLS`. `kit.ts` handles annotations, guarding and error shaping, so do not hand-roll those.
 
 ## Things that are decided
 

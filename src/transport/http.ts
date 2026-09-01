@@ -47,7 +47,7 @@ async function readBody(req: IncomingMessage): Promise<unknown> {
 /**
  * Constant-time-ish bearer check.
  *
- * Not a full timing-safe comparison — the token is compared after a length
+ * Not a full timing-safe comparison. The token is compared after a length
  * check, which is adequate for a loopback-by-default service and avoids
  * pulling in crypto for a value the operator sets themselves.
  */

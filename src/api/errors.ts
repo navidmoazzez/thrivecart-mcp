@@ -4,8 +4,8 @@
  * ThriveCart returns plain HTTP statuses with a thin body, so the status is
  * most of the signal and the message has to supply the rest. A bare
  * "ThriveCart API error 401" tells a model nothing it can act on; naming the
- * likely cause — wrong host, account key instead of API key, a cart the key
- * does not cover — is the difference between a correct retry and a give-up.
+ * likely cause (wrong host, account key instead of API key, a cart the key
+ * does not cover) is the difference between a correct retry and a give-up.
  */
 
 export class ThriveCartError extends Error {

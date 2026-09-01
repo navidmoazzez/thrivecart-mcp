@@ -11,7 +11,7 @@
  * description that says why. That is a speed bump a careless call trips over
  * and an intentional one clears in one retry. Pausing a subscription is undone
  * by resuming it, and creating an affiliate is undone by ignoring them, so
- * neither is guarded — a confirm on everything trains the model to pass confirm
+ * neither is guarded. A confirm on everything trains the model to pass confirm
  * reflexively, which is worse protection than none because it looks like a
  * safeguard while being ignored.
  *

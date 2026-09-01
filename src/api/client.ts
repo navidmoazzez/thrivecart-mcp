@@ -118,7 +118,7 @@ export class ThriveCartClient {
           return JSON.parse(text) as unknown;
         } catch {
           throw new ThriveCartError(
-            `ThriveCart returned a non-JSON body for ${endpoint}. This usually means the base URL is wrong — it must be https://thrivecart.com/api/external, not api.thrivecart.com.`,
+            `ThriveCart returned a non-JSON body for ${endpoint}. This usually means the base URL is wrong. It must be https://thrivecart.com/api/external, not api.thrivecart.com.`,
             response.status,
             endpoint,
             account.name,

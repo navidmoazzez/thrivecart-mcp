@@ -38,7 +38,7 @@ const getProductPricing = defineTool({
   name: "get_product_pricing",
   title: "Get product pricing",
   description:
-    "Get every price point configured on a product — one-time, split pay and subscription. A product's headline price is not the only thing customers can pay, so read this before quoting what something costs.",
+    "Get every price point configured on a product: one-time, split pay and subscription. A product's headline price is not the only thing customers can pay, so read this before quoting what something costs.",
   schema: {
     product_id: z.string().describe("Product id, from list_products."),
     ...accountArg,

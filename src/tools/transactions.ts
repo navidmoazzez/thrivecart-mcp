@@ -4,7 +4,7 @@
  * Two things shape this module.
  *
  * ThriveCart's own `product_id` filter on the transactions endpoint is
- * unreliable — it returns rows for other products, and it does so silently, so
+ * unreliable. It returns rows for other products, and it does so silently, so
  * a revenue figure built on it looks plausible and is wrong. Filtering happens
  * here instead, on the product name, after the rows are fetched.
  *
@@ -64,7 +64,7 @@ const getTransactions = defineTool({
   name: "get_transactions",
   title: "Get transactions",
   description:
-    "Get transactions from a ThriveCart account, with optional date and product-name filtering. ThriveCart's own product_id filter is unreliable and silently returns rows for other products, so filter with item_name instead — it is a case-insensitive contains match on the product name. Set fetch_all only when you need complete figures; it walks every page.",
+    "Get transactions from a ThriveCart account, with optional date and product-name filtering. ThriveCart's own product_id filter is unreliable and silently returns rows for other products, so filter with item_name instead, which is a case-insensitive contains match on the product name. Set fetch_all only when you need complete figures; it walks every page.",
   schema: {
     ...dateArgs,
     item_name: z
@@ -141,7 +141,7 @@ const getRevenueSummary = defineTool({
   name: "get_revenue_summary",
   title: "Get revenue summary",
   description:
-    "Revenue for a date range, grouped by product and sorted highest first, for one ThriveCart account. Walks every page of transactions, so it is the expensive call in this server — give it a date range rather than asking for all time. Money is summed in integer cents, so the totals are exact. Figures cover one cart only; run it per account and never add the results together unless asked to.",
+    "Revenue for a date range, grouped by product and sorted highest first, for one ThriveCart account. Walks every page of transactions, so it is the expensive call in this server, so give it a date range rather than asking for all time. Money is summed in integer cents, so the totals are exact. Figures cover one cart only; run it per account and never add the results together unless asked to.",
   schema: { ...dateArgs, ...accountArg },
   risk: "read" as const,
   handler: async ({ date_from, date_to, account }, ctx) => {

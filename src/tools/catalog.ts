@@ -23,17 +23,17 @@ const KINDS: OfferKind[] = [
   {
     endpoint: "bumps",
     singular: "bump",
-    what: "a bump offer — the checkbox add-on shown on the checkout page itself",
+    what: "a bump offer, the checkbox add-on shown on the checkout page itself",
   },
   {
     endpoint: "upsells",
     singular: "upsell",
-    what: "an upsell — the offer shown after the main purchase completes",
+    what: "an upsell, the offer shown after the main purchase completes",
   },
   {
     endpoint: "downsells",
     singular: "downsell",
-    what: "a downsell — the fallback offer shown when an upsell is declined",
+    what: "a downsell, the fallback offer shown when an upsell is declined",
   },
 ];
 

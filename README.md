@@ -9,7 +9,7 @@
 
 ThriveCart MCP server for Claude Code and AI agents. 22 tools for products, offers, transactions, revenue, customers, subscriptions and affiliates, across several carts at once.
 
-ThriveCart holds what most creator businesses actually run on, and its dashboard answers one question at a time. The number you usually want — which product carried last quarter, who is about to churn, what the bumps really added — takes ten minutes of clicking and a spreadsheet.
+ThriveCart holds what most creator businesses actually run on, and its dashboard answers one question at a time. The number you usually want takes ten minutes of clicking and a spreadsheet: which product carried last quarter, who is about to churn, what the bumps really added.
 
 This connects it to your assistant, with the multi-account problem solved. ThriveCart licenses per account, so most people end up with two or three carts, and figures from one silently passing as the whole business is the mistake worth designing against.
 
@@ -46,7 +46,7 @@ Claude: Walking every transaction. Two accounts configured.
 | 8 | [Writing safely](#8-writing-safely) | What is guarded and what is not |
 | 9 | [Your data](#9-your-data) | What is stored, and where |
 | 10 | [Troubleshooting](#10-troubleshooting) | When something breaks |
-| | [FAQ](#faq) | The questions people actually ask |
+| 11 | [FAQ](#11-faq) | The questions people actually ask |
 
 ## 1. What you can ask it 💬
 
@@ -339,7 +339,7 @@ Nothing is stored. No database, no cache, no telemetry. The key lives in your cl
 | `npx` not found in Claude Desktop | Use the absolute path from `which npx` |
 | Truncation warning | It walked `THRIVECART_MAX_PAGES` and stopped. Narrow the range or raise it |
 
-## FAQ
+## 11. FAQ ❓
 
 <details>
 <summary>Does this work with more than one ThriveCart account?</summary>
@@ -356,7 +356,7 @@ Both refuse without `confirm: true`, and the refusal states the order id and wha
 <details>
 <summary>Why is get_revenue_summary slow?</summary>
 
-ThriveCart has no aggregate endpoint, so it walks every page of transactions — one request per 100. Give it a date range rather than asking for all time.
+ThriveCart has no aggregate endpoint, so it walks every page of transactions, one request per 100. Give it a date range rather than asking for all time.
 </details>
 
 <details>
