@@ -46,7 +46,7 @@ const whoami = defineTool({
   risk: "read" as const,
   handler: async ({ account }, ctx) => {
     const target = ctx.account(account);
-    const data = await ctx.client.get(target, "account");
+    const data = await ctx.client.get(target, "ping");
     return { account: target.name, details: data };
   },
 });

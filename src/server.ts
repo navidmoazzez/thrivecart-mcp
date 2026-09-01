@@ -14,7 +14,7 @@ import { WriteGuard } from "./safety.js";
 import { ALL_TOOLS } from "./tools/index.js";
 import { makeContext, register } from "./tools/kit.js";
 
-export const VERSION = "2.0.1";
+export const VERSION = "2.1.0";
 
 export const INSTRUCTIONS = `Tools for ThriveCart: products and their pricing, bumps, upsells and downsells, transactions and revenue, customers, subscriptions and affiliates.
 

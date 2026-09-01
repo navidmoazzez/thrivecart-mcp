@@ -51,8 +51,8 @@ jobs:
                 const listed = raw.trim().split("\n").map(l => JSON.parse(l)).find(m => m.id === 2);
                 const tools = listed?.result?.tools ?? [];
                 console.log(`tools: ${tools.length}`);
-                if (tools.length !== 22) {
-                  console.error(`expected 22 tools, got ${tools.length}`);
+                if (tools.length !== 24) {
+                  console.error(`expected 24 tools, got ${tools.length}`);
                   process.exit(1);
                 }
                 const unannotated = tools.filter(t => t.annotations?.readOnlyHint === undefined);

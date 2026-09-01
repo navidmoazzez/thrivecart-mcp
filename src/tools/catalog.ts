@@ -72,7 +72,31 @@ function getTool(kind: OfferKind) {
   });
 }
 
+function pricingTool(kind: OfferKind) {
+  return defineTool({
+    name: `get_${kind.singular}_pricing`,
+    title: `Get ${kind.singular} pricing`,
+    description: `Get every price point configured on one ${kind.singular}. Its headline price is not necessarily what a buyer paid, so read this before quoting what it costs.`,
+    schema: {
+      [`${kind.singular}_id`]: z
+        .string()
+        .describe(`${kind.singular} id, from list_${kind.endpoint}.`),
+      ...accountArg,
+    },
+    risk: "read" as const,
+    handler: async (args: Record<string, string | undefined>, ctx) => {
+      const id = args[`${kind.singular}_id`];
+      if (!id) throw new Error(`${kind.singular}_id is required.`);
+      return ctx.client.get(
+        ctx.account(args.account),
+        `${kind.endpoint}/${encodeURIComponent(id)}/pricing_options`,
+      );
+    },
+  });
+}
+
 export const offerTools: AnyToolSpec[] = KINDS.flatMap((kind) => [
   listTool(kind),
   getTool(kind),
+  pricingTool(kind),
 ]) as unknown as AnyToolSpec[];

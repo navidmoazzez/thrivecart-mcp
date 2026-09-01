@@ -1,5 +1,30 @@
 # Versions
 
+## 2.1.0
+
+**Six endpoints were wrong and are now fixed.** Every path in this server was inherited from the 1.x release and had never been checked against ThriveCart's own SDK. Verified against [thrivecart/php-api](https://github.com/thrivecart/php-api) `src/Api.php`:
+
+| Tool | Was calling | Correct endpoint |
+|---|---|---|
+| `get_product_pricing` | `products/{id}/prices` | `products/{id}/pricing_options` |
+| `cancel_subscription` | `cancel` | `cancelSubscription` |
+| `pause_subscription` | `pause` | `pauseSubscription` |
+| `resume_subscription` | `resume` | `resumeSubscription` |
+| `create_affiliate` | `affiliate/create` | `POST /affiliates` |
+| `whoami` | `account` | `ping` |
+
+Every one of those returned an error before this release.
+
+**`get_customers` is removed.** ThriveCart has no endpoint that lists customers. The tool called `/customers`, which does not exist. Use `get_transactions` to see many buyers at once.
+
+**Rate limiting corrected.** ThriveCart documents 60 requests per minute per account. The client paced at 120ms, which is 500 per minute, so `get_revenue_summary` would rate limit almost immediately. The default is now 1000ms.
+
+**Added:** `get_bump_pricing`, `get_upsell_pricing` and `get_downsell_pricing`, which ThriveCart exposes and this server did not.
+
+24 tools, up from 22.
+
+Documentation corrected throughout to match the API rather than assumption, including the exact key location (Settings, then API & webhooks, then API tokens) and a FAQ with no unverifiable claims in it.
+
 ## 2.0.1
 
 Documentation only. Removed em dashes throughout, numbered the FAQ section, and corrected the authorship line and its placement. No code or tool changes.

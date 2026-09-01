@@ -161,7 +161,7 @@ export function loadConfig(): Config {
     readOnly: envFlag("THRIVECART_READ_ONLY", false),
     allowDestructive: envFlag("THRIVECART_ALLOW_DESTRUCTIVE", true),
     requestTimeoutMs: envInt("THRIVECART_REQUEST_TIMEOUT_MS", 30_000),
-    minRequestIntervalMs: envInt("THRIVECART_MIN_REQUEST_INTERVAL_MS", 120),
+    minRequestIntervalMs: envInt("THRIVECART_MIN_REQUEST_INTERVAL_MS", 1000),
     maxRetries: envInt("THRIVECART_MAX_RETRIES", 3),
     maxPages: envInt("THRIVECART_MAX_PAGES", 100),
     userAgent: process.env.THRIVECART_USER_AGENT || "thrivecart-mcp",

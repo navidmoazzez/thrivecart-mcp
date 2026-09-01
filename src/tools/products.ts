@@ -45,7 +45,7 @@ const getProductPricing = defineTool({
   },
   risk: "read" as const,
   handler: async ({ product_id, account }, ctx) =>
-    ctx.client.get(ctx.account(account), `products/${encodeURIComponent(product_id)}/prices`),
+    ctx.client.get(ctx.account(account), `products/${encodeURIComponent(product_id)}/pricing_options`),
 });
 
 export const productTools: AnyToolSpec[] = [

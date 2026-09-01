@@ -34,7 +34,7 @@ const pauseSubscription = defineTool({
     `pause subscription ${order_id}${account ? ` on ${account}` : ""}`,
   handler: async ({ order_id, account }, ctx) => {
     const target = ctx.account(account);
-    const data = await ctx.client.post(target, "pause", { order_id });
+    const data = await ctx.client.post(target, "pauseSubscription", { order_id });
     return { account: target.name, order_id, action: "paused", result: data };
   },
 });
@@ -51,7 +51,7 @@ const resumeSubscription = defineTool({
     `resume subscription ${order_id}${account ? ` on ${account}` : ""}`,
   handler: async ({ order_id, account }, ctx) => {
     const target = ctx.account(account);
-    const data = await ctx.client.post(target, "resume", { order_id });
+    const data = await ctx.client.post(target, "resumeSubscription", { order_id });
     return { account: target.name, order_id, action: "resumed", result: data };
   },
 });
@@ -67,7 +67,7 @@ const cancelSubscription = defineTool({
     `CANCEL subscription ${order_id}${account ? ` on ${account}` : ""}, ending the customer's access permanently`,
   handler: async ({ order_id, account }, ctx) => {
     const target = ctx.account(account);
-    const data = await ctx.client.post(target, "cancel", { order_id });
+    const data = await ctx.client.post(target, "cancelSubscription", { order_id });
     return { account: target.name, order_id, action: "cancelled", result: data };
   },
 });

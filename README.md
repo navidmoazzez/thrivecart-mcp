@@ -7,11 +7,11 @@
 [![YouTube](https://img.shields.io/badge/YouTube-@thenavidm-red?logo=youtube&logoColor=white)](https://youtube.com/@thenavidm?sub_confirmation=1)
 [![X](https://img.shields.io/badge/X-@thenavidm-black?logo=x)](https://x.com/thenavidm)
 
-ThriveCart MCP server for Claude Code and AI agents. 22 tools for products, offers, transactions, revenue, customers, subscriptions and affiliates, across several carts at once.
+ThriveCart MCP server for Claude Code and AI agents. 24 tools for products, offers, transactions, revenue, customers, subscriptions and affiliates, across several carts at once.
 
-ThriveCart holds what most creator businesses actually run on, and its dashboard answers one question at a time. The number you usually want takes 10 minutes of clicking and a spreadsheet: which product carried last quarter, who is about to churn, what the bumps really added.
+ThriveCart holds your products, orders, customers, subscriptions and affiliates. Its dashboard shows them a screen at a time, so questions that cross products and dates mean exporting and joining the data yourself.
 
-This connects it to your AI assistant, with the multi-account problem solved. ThriveCart licenses per account, so most people end up with 2 or 3 carts, and figures from one silently passing as the whole business is the mistake worth designing against.
+This connects it to your AI assistant, with the multi-account problem solved. A ThriveCart API key reaches exactly one account, so running more than one cart means more than one key, and figures from one silently passing as the whole business is the mistake worth designing against.
 
 Built and maintained by [Navid Moazzez](https://navid.me?utm_source=github&utm_medium=readme&utm_campaign=thrivecart-mcp).
 
@@ -41,7 +41,7 @@ Claude: Walking every transaction. Two accounts configured.
 | 3 | [Setup](#3-setup-) | Getting your API key |
 | 4 | [Connect your client](#4-connect-your-client-) | Claude, Cursor, Windsurf, the rest |
 | 5 | [Check it worked](#5-check-it-worked-) | And the two things that fail |
-| 6 | [Tools](#6-tools-) | All 22, grouped by what they reach |
+| 6 | [Tools](#6-tools-) | All 24, grouped by what they reach |
 | 7 | [Several carts](#7-several-carts-) | The multi-account model |
 | 8 | [Writing safely](#8-writing-safely-) | What is guarded and what is not |
 | 9 | [Your data](#9-your-data-) | What is stored, and where |
@@ -86,10 +86,14 @@ Installing the package needs no account. Only connecting it does, which is the n
 ThriveCart uses a plain API key. There is no OAuth flow to complete and nothing to refresh.
 
 1. Open your ThriveCart dashboard.
-2. Go to **Settings**, then **API & Webhooks**.
-3. Create an API key, or copy the one already there.
+2. Go to **Settings**, then **API & webhooks**, then **API tokens**.
+3. Create a token, and copy it.
 
-That key is the whole credential. It reaches everything in the account, including refunds, so treat it like a password.
+That token is the whole credential. It reaches everything in that one account, including refunds, so treat it like a password.
+
+One key covers one ThriveCart account. Running several carts means several keys, which is what [section 7](#7-several-carts-) is for.
+
+ThriveCart rate limits the API to **60 requests per minute, per account**. This server paces itself to stay under that, so you should not have to think about it.
 
 > [!IMPORTANT]
 > The API answers on `https://thrivecart.com/api/external`. **Not** `api.thrivecart.com`. That host exists and resolves, then refuses everything, which looks exactly like a bad key. This server uses the right one; the note is here because you may hit it elsewhere.
@@ -200,7 +204,7 @@ The two failures people actually hit:
 
 ## 6. Tools 🧰
 
-All 22. Every one takes an optional `account`.
+All 24. Every one takes an optional `account`. Every endpoint below was checked against ThriveCart's own PHP SDK ([thrivecart/php-api](https://github.com/thrivecart/php-api)).
 
 ### Accounts
 
@@ -221,9 +225,9 @@ All 22. Every one takes an optional `account`.
 
 | Tool | What it does |
 |---|---|
-| `list_bumps` / `get_bump` | The checkbox add-on on the checkout page |
-| `list_upsells` / `get_upsell` | The offer after the purchase completes |
-| `list_downsells` / `get_downsell` | The fallback when an upsell is declined |
+| `list_bumps` / `get_bump` / `get_bump_pricing` | The checkbox add-on on the checkout page |
+| `list_upsells` / `get_upsell` / `get_upsell_pricing` | The offer after the purchase completes |
+| `list_downsells` / `get_downsell` / `get_downsell_pricing` | The fallback when an upsell is declined |
 
 ### Transactions and revenue
 
@@ -236,8 +240,9 @@ All 22. Every one takes an optional `account`.
 
 | Tool | What it does |
 |---|---|
-| `get_customers` | Browse the customer list |
 | `get_customer` | One customer by email, with their order ids |
+
+ThriveCart has no endpoint that lists customers, so there is no tool for it. Use `get_transactions` when you need to see many buyers at once.
 
 ### Subscriptions
 
@@ -344,37 +349,43 @@ Nothing is stored. No database, no cache, no telemetry. The key lives in your cl
 <details>
 <summary>Does this work with more than one ThriveCart account?</summary>
 
-Yes, and that is the main reason it exists. Set `THRIVECART_ACCOUNTS` to a JSON array and pass `account` on any tool. Figures are never combined unless you ask. See [section 7](#7-several-carts-).
+Yes, and that is the main reason it exists. A ThriveCart API key reaches exactly one account, so several carts means several keys. Set `THRIVECART_ACCOUNTS` to a JSON array and pass `account` on any tool. Figures are never combined unless you ask. See [section 7](#7-several-carts-).
 </details>
 
 <details>
 <summary>Can it refund or cancel by accident?</summary>
 
-Both refuse without `confirm: true`, and the refusal states the order id and what will happen. `THRIVECART_READ_ONLY=1` removes them from the tool list entirely.
-</details>
-
-<details>
-<summary>Why is get_revenue_summary slow?</summary>
-
-ThriveCart has no aggregate endpoint, so it walks every page of transactions, 1 request per 100. Give it a date range rather than asking for all time.
-</details>
-
-<details>
-<summary>Why does filtering by product id not work?</summary>
-
-ThriveCart's `product_id` parameter returns rows for other products, silently. That is upstream, not this server. Filter on `item_name` instead, which is what these tools do.
+Both refuse without `confirm: true`, and the refusal states the order id and what will happen. `THRIVECART_READ_ONLY=1` removes every write from the tool list entirely, so a model cannot call what it cannot see.
 </details>
 
 <details>
 <summary>Is my API key sent anywhere except ThriveCart?</summary>
 
-No. It goes in an `Authorization` header to `thrivecart.com` and nowhere else. There is no telemetry.
+No. It goes in an `Authorization: Bearer` header to `thrivecart.com` and nowhere else. Nothing is stored, cached or reported, and there is no telemetry. You can check: the only external host in the source is `thrivecart.com`.
 </details>
 
 <details>
-<summary>Do I need a ThriveCart plan for API access?</summary>
+<summary>Why is get_revenue_summary slow?</summary>
 
-The API is available on standard ThriveCart accounts. Create a key under Settings → API & Webhooks.
+It walks every page of `/transactions` to total them, and ThriveCart rate limits to 60 requests per minute per account, so the server paces itself to stay under that. Give it a date range rather than asking for all time.
+</details>
+
+<details>
+<summary>Why is there no tool to list customers?</summary>
+
+Because ThriveCart has no endpoint for it. Their API exposes `POST /customer`, which looks one person up by email, and nothing that pages through everyone. `get_transactions` is the closest thing, since it returns buyers along with what they bought.
+</details>
+
+<details>
+<summary>Why does api.thrivecart.com not work?</summary>
+
+It is not the API host. ThriveCart's API lives at `https://thrivecart.com/api/external`, which is what their own SDK uses. The `api.` subdomain is a common guess and fails in a way that looks like a bad key.
+</details>
+
+<details>
+<summary>What happens if I regenerate my API token?</summary>
+
+Every client using the old one starts failing at once, because there is no refresh and no grace period. Paste the new token into your MCP client config and restart it. Run `doctor` to confirm.
 </details>
 
 ## Questions

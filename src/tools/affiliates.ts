@@ -62,7 +62,7 @@ const createAffiliate = defineTool({
     const body: Record<string, unknown> = { email };
     if (first_name) body.first_name = first_name;
     if (last_name) body.last_name = last_name;
-    const data = await ctx.client.post(target, "affiliate/create", body);
+    const data = await ctx.client.post(target, "affiliates", body);
     return { account: target.name, email, action: "created", result: data };
   },
 });
