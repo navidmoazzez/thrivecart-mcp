@@ -38,7 +38,7 @@ ThriveCart licenses per account, so a personal cart, a business cart and a clien
 }
 ```
 
-Escaping that JSON inside JSON is fiddly. Two things that go wrong:
+Escaping that JSON inside JSON is fiddly. 2 things that go wrong:
 
 - **Unescaped inner quotes.** Every `"` inside the array needs `\"`. A JSON config file with a broken value usually stops the whole client loading its servers, not just this one.
 - **A shell export instead.** `export THRIVECART_ACCOUNTS='[{"name":"a","api_key":"k"}]'` with single quotes outside needs no escaping and is easier to get right when testing.

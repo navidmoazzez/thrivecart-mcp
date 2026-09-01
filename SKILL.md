@@ -15,13 +15,13 @@ Pass `account` on any tool. Omit it and the default answers.
 
 ## Revenue, without getting it wrong
 
-Three traps, in the order people hit them.
+3 traps, in the order people hit them.
 
 **A page is not a period.** `get_transactions` returns one page unless you pass `fetch_all`. The result carries a `scope` field saying which you are looking at. Read it before quoting a total. Quoting page one as the quarter is the most common way to be confidently wrong here.
 
 **ThriveCart's `product_id` filter is broken.** It returns rows for other products, silently. Never filter on it. Use `item_name`, a case-insensitive contains match, which is what these tools do.
 
-**`get_revenue_summary` walks every page.** It is the expensive call in this server, one request per 100 transactions. Give it a date range. Asking for all time on a busy cart is a lot of requests, and it will say so with a truncation warning if it hits the page ceiling. If you see that warning, the figures are incomplete; report that rather than the number.
+**`get_revenue_summary` walks every page.** It is the expensive call in this server, 1 request per 100 transactions. Give it a date range. Asking for all time on a busy cart is a lot of requests, and it will say so with a truncation warning if it hits the page ceiling. If you see that warning, the figures are incomplete; report that rather than the number.
 
 Money is summed in integer cents, so totals are exact and comparable.
 
@@ -35,7 +35,7 @@ Order and subscription ids come from `get_customer` or `get_transactions`. There
 
 ## Changing things
 
-Four tools change anything, and they split by whether it can be walked back.
+4 tools change anything, and they split by whether it can be walked back.
 
 | Tool | Reversible | Guard |
 |---|---|---|

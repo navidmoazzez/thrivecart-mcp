@@ -9,9 +9,9 @@
 
 ThriveCart MCP server for Claude Code and AI agents. 22 tools for products, offers, transactions, revenue, customers, subscriptions and affiliates, across several carts at once.
 
-ThriveCart holds what most creator businesses actually run on, and its dashboard answers one question at a time. The number you usually want takes ten minutes of clicking and a spreadsheet: which product carried last quarter, who is about to churn, what the bumps really added.
+ThriveCart holds what most creator businesses actually run on, and its dashboard answers one question at a time. The number you usually want takes 10 minutes of clicking and a spreadsheet: which product carried last quarter, who is about to churn, what the bumps really added.
 
-This connects it to your assistant, with the multi-account problem solved. ThriveCart licenses per account, so most people end up with two or three carts, and figures from one silently passing as the whole business is the mistake worth designing against.
+This connects it to your AI assistant, with the multi-account problem solved. ThriveCart licenses per account, so most people end up with 2 or 3 carts, and figures from one silently passing as the whole business is the mistake worth designing against.
 
 Built and maintained by [Navid Moazzez](https://navid.me?utm_source=github&utm_medium=readme&utm_campaign=thrivecart-mcp).
 
@@ -36,17 +36,17 @@ Claude: Walking every transaction. Two accounts configured.
 
 | | Section | |
 |---|---|---|
-| 1 | [What you can ask it](#1-what-you-can-ask-it) | Real prompts, not features |
-| 2 | [Quick install](#2-quick-install) | One line, no account needed |
-| 3 | [Setup](#3-setup) | Getting your API key |
-| 4 | [Connect your client](#4-connect-your-client) | Claude, Cursor, Windsurf, the rest |
-| 5 | [Check it worked](#5-check-it-worked) | And the two things that fail |
-| 6 | [Tools](#6-tools) | All 22, grouped by what they reach |
-| 7 | [Several carts](#7-several-carts) | The multi-account model |
-| 8 | [Writing safely](#8-writing-safely) | What is guarded and what is not |
-| 9 | [Your data](#9-your-data) | What is stored, and where |
-| 10 | [Troubleshooting](#10-troubleshooting) | When something breaks |
-| 11 | [FAQ](#11-faq) | The questions people actually ask |
+| 1 | [What you can ask it](#1-what-you-can-ask-it-) | Real prompts, not features |
+| 2 | [Quick install](#2-quick-install-) | One line, no account needed |
+| 3 | [Setup](#3-setup-) | Getting your API key |
+| 4 | [Connect your client](#4-connect-your-client-) | Claude, Cursor, Windsurf, the rest |
+| 5 | [Check it worked](#5-check-it-worked-) | And the two things that fail |
+| 6 | [Tools](#6-tools-) | All 22, grouped by what they reach |
+| 7 | [Several carts](#7-several-carts-) | The multi-account model |
+| 8 | [Writing safely](#8-writing-safely-) | What is guarded and what is not |
+| 9 | [Your data](#9-your-data-) | What is stored, and where |
+| 10 | [Troubleshooting](#10-troubleshooting-) | When something breaks |
+| 11 | [FAQ](#11-faq-) | The questions people actually ask |
 
 ## 1. What you can ask it 💬
 
@@ -79,7 +79,7 @@ Installing the package needs no account. Only connecting it does, which is the n
 |---|---|---|
 | Node 20 or newer | `node -v` | [nodejs.org](https://nodejs.org) |
 | A ThriveCart account | Open your ThriveCart dashboard | [thrivecart.com](https://navid.me/go/thrivecart/) |
-| An API key | Settings → API & Webhooks | See [section 3](#3-setup) |
+| An API key | Settings → API & Webhooks | See [section 3](#3-setup-) |
 
 ## 3. Setup 🔑
 
@@ -98,7 +98,7 @@ That key is the whole credential. It reaches everything in the account, includin
 
 Every block below is complete on its own. Pick your client, paste, done.
 
-Replace `your-api-key` with the key from [section 3](#3-setup).
+Replace `your-api-key` with the key from [section 3](#3-setup-).
 
 ### Claude Code
 
@@ -198,7 +198,7 @@ The two failures people actually hit:
 | `key rejected` | The account password was pasted instead of an API key from Settings → API & Webhooks |
 | `navid-media and students are the same cart` | The second cart was configured with the first cart's key. Left alone, this double-counts revenue |
 
-## 6. Tools 🛠️
+## 6. Tools 🧰
 
 All 22. Every one takes an optional `account`.
 
@@ -258,7 +258,7 @@ All 22. Every one takes an optional `account`.
 
 ### Resources and prompts
 
-Three resources (`thrivecart://accounts`, `thrivecart://concepts`, and the tool list) and three prompts: **revenue-report**, **customer-lookup**, **product-performance**.
+3 resources (`thrivecart://accounts`, `thrivecart://concepts`, and the tool list) and 3 prompts: **revenue-report**, **customer-lookup**, **product-performance**.
 
 ## 7. Several carts 🛒
 
@@ -275,7 +275,7 @@ ThriveCart licenses per account, so most people run more than one. Products, cus
 
 Then `account: "students"` on any tool. Omit it and the default answers.
 
-Three details worth knowing:
+3 details worth knowing:
 
 - An exact name beats a prefix. With `navid-media` and `navid-personal` configured, `"navid-media"` is never ambiguous.
 - Two carts sharing a name is refused at load, because `account` would silently pick one.
@@ -285,9 +285,9 @@ Three details worth knowing:
 
 **Writes work by default.** A server where every write needs a flag teaches you to pass that flag reflexively, which is worse than no protection because it looks like a safeguard while being ignored.
 
-Three graduated mechanisms instead.
+3 graduated mechanisms instead.
 
-**`confirm: true` on the two irreversible tools.** `cancel_subscription` ends a customer's access and the only route back is asking them to buy again. `refund_transaction` moves real money and there is no reverse. Both refuse without it, and the refusal names what is about to happen:
+**`confirm: true` on the 2 irreversible tools.** `cancel_subscription` ends a customer's access and the only route back is asking them to buy again. `refund_transaction` moves real money and there is no reverse. Both refuse without it, and the refusal names what is about to happen:
 
 ```
 refund_transaction moves money or ends a customer's access and cannot be undone,
@@ -344,7 +344,7 @@ Nothing is stored. No database, no cache, no telemetry. The key lives in your cl
 <details>
 <summary>Does this work with more than one ThriveCart account?</summary>
 
-Yes, and that is the main reason it exists. Set `THRIVECART_ACCOUNTS` to a JSON array and pass `account` on any tool. Figures are never combined unless you ask. See [section 7](#7-several-carts).
+Yes, and that is the main reason it exists. Set `THRIVECART_ACCOUNTS` to a JSON array and pass `account` on any tool. Figures are never combined unless you ask. See [section 7](#7-several-carts-).
 </details>
 
 <details>
@@ -356,7 +356,7 @@ Both refuse without `confirm: true`, and the refusal states the order id and wha
 <details>
 <summary>Why is get_revenue_summary slow?</summary>
 
-ThriveCart has no aggregate endpoint, so it walks every page of transactions, one request per 100. Give it a date range rather than asking for all time.
+ThriveCart has no aggregate endpoint, so it walks every page of transactions, 1 request per 100. Give it a date range rather than asking for all time.
 </details>
 
 <details>

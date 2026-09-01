@@ -1,7 +1,7 @@
 /**
  * The ThriveCart HTTP client.
  *
- * Three things worth knowing.
+ * 3 things worth knowing.
  *
  * The base URL is `https://thrivecart.com/api/external`, not
  * `api.thrivecart.com`. The api. host exists, resolves, and refuses everything,

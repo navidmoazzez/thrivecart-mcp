@@ -18,7 +18,7 @@ export const VERSION = "2.0.1";
 
 export const INSTRUCTIONS = `Tools for ThriveCart: products and their pricing, bumps, upsells and downsells, transactions and revenue, customers, subscriptions and affiliates.
 
-Five things worth knowing before calling anything:
+5 things worth knowing before calling anything:
 
 1. More than one cart can be configured, and they share nothing. Every tool takes an \`account\` argument; omit it to use the default. Call list_accounts when it is not obvious which cart a request means, and never present one cart's revenue as the whole business unless you have checked there is only one.
 

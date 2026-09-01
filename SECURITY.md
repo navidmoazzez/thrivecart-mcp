@@ -6,7 +6,7 @@ Found a vulnerability? [Report it privately](https://github.com/navidmoazzez/thr
 
 ## What this server holds
 
-One or more ThriveCart API keys, read from environment variables at startup and held in memory for the process lifetime. Nothing is written to disk, cached, or sent anywhere except `thrivecart.com`.
+1 or more ThriveCart API keys, read from environment variables at startup and held in memory for the process lifetime. Nothing is written to disk, cached, or sent anywhere except `thrivecart.com`.
 
 A ThriveCart API key reaches the whole account, including refunds and cancellations. There is no read-only key and no scope system upstream, so the key you give this server is the key to the till. Treat it like a password.
 
