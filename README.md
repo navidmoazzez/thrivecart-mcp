@@ -13,6 +13,8 @@ ThriveCart holds what most creator businesses actually run on, and its dashboard
 
 This connects it to your assistant, with the multi-account problem solved. ThriveCart licenses per account, so most people end up with two or three carts, and figures from one silently passing as the whole business is the mistake worth designing against.
 
+Built and maintained by [Navid Moazzez](https://navid.me?utm_source=github&utm_medium=readme&utm_campaign=thrivecart-mcp).
+
 ```
 You: revenue by product last quarter, both carts, separately
 
@@ -29,8 +31,6 @@ Claude: Walking every transaction. Two accounts configured.
 
   Bumps and upsells were 31% of navid-media, 4% of students.
 ```
-
-Built by [Navid Moazzez](https://navid.me).
 
 ## Contents 📑
 
