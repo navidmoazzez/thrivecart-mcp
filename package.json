@@ -1,28 +1,62 @@
 {
-  "name": "thrivecart-mcp",
-  "version": "1.0.0",
+  "name": "@thenavidm/thrivecart-mcp",
+  "version": "2.0.0",
+  "description": "ThriveCart MCP server for Claude Code and AI agents. 22 tools for products, offers, transactions, revenue, customers and subscriptions.",
   "type": "module",
-  "main": "index.mjs",
-  "bin": "index.mjs",
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.27.1"
+  "main": "./dist/index.js",
+  "bin": {
+    "thrivecart-mcp": "dist/index.js"
   },
-  "license": "AGPL-3.0",
-  "author": "Navid Moazzez",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.18.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  },
+  "license": "MIT",
+  "author": "Navid Moazzez (https://navid.me)",
   "homepage": "https://navid.me",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thenavidm/thrivecart-mcp"
+    "url": "git+https://github.com/navidmoazzez/thrivecart-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/navidmoazzez/thrivecart-mcp/issues"
   },
   "keywords": [
     "mcp",
+    "model-context-protocol",
     "thrivecart",
     "ecommerce",
-    "mcp-server"
+    "checkout",
+    "mcp-server",
+    "claude",
+    "claude-code",
+    "ai-agents",
+    "llm-tools"
   ],
   "files": [
-    "index.mjs",
+    "dist",
     "README.md",
+    "SKILL.md",
     "LICENSE"
+  ],
+  "contributors": [
+    "Navid Moazzez (https://navid.me)"
   ]
 }
