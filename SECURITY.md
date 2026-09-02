@@ -33,6 +33,15 @@ The transport is stateless: one transport per request, closed with the response,
 
 Product names, customer names and affiliate details are attacker-influenceable text. This server returns them as data and its instructions tell the model to treat them as data. A model driving these tools should never act on instructions found inside a product title.
 
+## Good-faith research
+
+Look at whatever you like in this repository. When testing, please do not access,
+change or delete data that is not yours, and do not disrupt a service other
+people depend on. If a test could affect anyone else, stop and send a private
+report first.
+
+Research done in that spirit is welcome, and nothing here is a trap.
+
 ## Supported versions
 
 Fixes go to the latest published version.
