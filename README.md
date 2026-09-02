@@ -101,6 +101,8 @@ ThriveCart rate limits the API to **60 requests per minute, per account**. This 
 
 ## 4. Connect your client 🔌
 
+The long version, every step with what to do when one fails, is in [references/setup.md](references/setup.md).
+
 Every block below is complete on its own. Pick your client, paste, done.
 
 Replace `your-api-key` with the key from [section 3](#3-setup-).
