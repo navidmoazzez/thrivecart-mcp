@@ -3,10 +3,11 @@
  *
  * Two things shape this module.
  *
- * ThriveCart's own `product_id` filter on the transactions endpoint is
- * unreliable. It returns rows for other products, and it does so silently, so
- * a revenue figure built on it looks plausible and is wrong. Filtering happens
- * here instead, on the product name, after the rows are fetched.
+ * ThriveCart's transactions endpoint has no product filter. The parameters it
+ * documents are `page`, `perPage`, `query`, `transactionType` and `currency`,
+ * and `product_id` is not among them, so passing one is a guess whose result
+ * nobody has promised. Filtering happens here instead, on the product name,
+ * after the rows are fetched.
  *
  * And a revenue summary has to see every transaction, not the first page, so it
  * walks the cursor itself. That is the one genuinely expensive call in this
@@ -64,7 +65,7 @@ const getTransactions = defineTool({
   name: "get_transactions",
   title: "Get transactions",
   description:
-    "Get transactions from a ThriveCart account, with optional date and product-name filtering. ThriveCart's own product_id filter is unreliable and silently returns rows for other products, so filter with item_name instead, which is a case-insensitive contains match on the product name. Set fetch_all only when you need complete figures; it walks every page.",
+    "Get transactions from a ThriveCart account, with optional date and product-name filtering. ThriveCart's transactions endpoint documents no product filter, so filter with item_name instead, which is a case-insensitive contains match applied here after the rows are fetched. Set fetch_all only when you need complete figures; it walks every page.",
   schema: {
     ...dateArgs,
     item_name: z

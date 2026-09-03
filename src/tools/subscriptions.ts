@@ -76,7 +76,7 @@ const refundTransaction = defineTool({
   name: "refund_transaction",
   title: "Refund a transaction",
   description:
-    "Refund a transaction, returning the money to the customer. This moves real funds and cannot be undone. Refuses to run without confirm: true. Check the amount with get_transactions or get_customer before calling, because the order id alone does not tell you how much is about to move.",
+    "Refund a transaction, returning the money to the customer. This moves real funds and cannot be undone: ThriveCart passes the refund straight to the payment gateway, and a refund cannot be reversed there. Refunding does not cancel anything, so a refunded subscription payment leaves the subscription billing on its normal schedule; use cancel_subscription as well if that is what was meant. Refuses to run without confirm: true. Check the amount with get_transactions or get_customer before calling, because the order id alone does not tell you how much is about to move.",
   schema: { ...orderIdArg, ...confirmArg, ...accountArg },
   risk: "destructive" as const,
   summary: ({ order_id, account }) =>

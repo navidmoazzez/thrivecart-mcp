@@ -15,7 +15,7 @@ metadata:
     bins: [thrivecart-cli]
   install:
     kind: npm
-    package: "@thenavidm/thrivecart-mcp"
+    package: "@thenavidm/thrivecart-mcp-cli"
     bins: [thrivecart-cli, thrivecart-mcp]
 ---
 
@@ -35,7 +35,7 @@ thrivecart-cli --version
 If that fails:
 
 ```bash
-npm i -g @thenavidm/thrivecart-mcp
+npm i -g @thenavidm/thrivecart-mcp-cli
 ```
 
 If `--version` still reports command not found, the install directory is not on
@@ -165,16 +165,18 @@ fields you did not ask for.
 | Code | Meaning |
 |---|---|
 | 0 | Success |
-| 2 | Usage error, wrong or missing arguments |
+| 1 | Unknown command, or a tool hidden by `THRIVECART_READ_ONLY=1` |
+| 2 | Usage error: wrong or missing arguments, or a write the guard refused |
 | 3 | Not found |
-| 4 | Authentication required, usually a regenerated key |
-| 5 | API error upstream, and any refused write |
+| 4 | Authentication rejected, usually a regenerated key |
+| 5 | API error upstream |
 | 7 | Rate limited, wait and retry |
-| 10 | Config error |
+| 10 | Nothing configured: no `THRIVECART_API_KEY`, no `THRIVECART_ACCOUNTS` |
 
-Branch on these rather than reading the message. Note that a write refused for
-want of `--confirm` exits 5, not 2: it is a guard tripping, not a mistyped
-command.
+Branch on these rather than reading the message. A write refused for want of
+`--confirm` exits 2, alongside the other things the caller got wrong: retrying
+it unchanged will fail again. 5 and 7 are the two worth retrying. 4 and 10 mean
+stop and tell the person: no retry fixes a rejected or absent token.
 
 ## Writing is on. This one touches money
 
@@ -192,9 +194,14 @@ person's money and access:
 |---|---|---|
 | `pause-subscription` | Yes, with `resume-subscription` | none |
 | `resume-subscription` | Yes | none |
-| `create-affiliate` | In effect, by ignoring them | none |
+| `create-affiliate` | Not from here. This server has no tool that removes one | none |
 | `cancel-subscription` | **No.** Access ends, and the only route back is asking them to buy again | `--confirm` |
 | `refund-transaction` | **No.** Real funds leave the account. There is no un-refund | `--confirm` |
+
+**A refund does not cancel anything.** This is ThriveCart's documented
+behaviour and it catches people out: refund a subscription payment and the
+subscription keeps billing on its normal schedule. If the customer asked to
+leave, that is two commands. Say so rather than assuming one covered both.
 
 **Prefer pausing over cancelling** whenever the customer might come back.
 
@@ -240,7 +247,7 @@ otherwise shows up as doubled revenue.
 ```bash
 claude mcp add thrivecart \
   -e THRIVECART_API_KEY=your-api-key \
-  -- npx -y @thenavidm/thrivecart-mcp
+  -- npx -y @thenavidm/thrivecart-mcp-cli
 ```
 
 Verify with `claude mcp list`. Every other client is in the README, and the full

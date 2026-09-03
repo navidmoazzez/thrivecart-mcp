@@ -7,6 +7,7 @@
  * rather than something the user has to know to ask for.
  */
 
+import { createRequire } from "node:module";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { ThriveCartClient } from "./api/client.js";
 import { loadConfig, type Config } from "./config.js";
@@ -14,7 +15,15 @@ import { WriteGuard } from "./safety.js";
 import { ALL_TOOLS } from "./tools/index.js";
 import { makeContext, register } from "./tools/kit.js";
 
-export const VERSION = "2.1.0";
+/**
+ * Read from package.json rather than repeated here.
+ *
+ * A hardcoded copy silently drifts: 2.1.0 was still what `--version` and
+ * `doctor` answered while package.json had moved on, because a release bumps
+ * one and not the other.
+ */
+const require = createRequire(import.meta.url);
+export const VERSION: string = (require("../package.json") as { version: string }).version;
 
 export const INSTRUCTIONS = `Tools for ThriveCart: products and their pricing, bumps, upsells and downsells, transactions and revenue, customers, subscriptions and affiliates.
 
@@ -123,17 +132,20 @@ consistent across endpoints or account vintages: an amount arrives as \`amount\`
 as \`date\` or \`created_at\`, a product name as \`item_name\` or \`product_name\`. These tools normalise
 all of that and sum money in integer cents, so totals are exact.
 
-## The product_id filter is broken
-ThriveCart's \`product_id\` query parameter on transactions returns rows for other products. It fails
-silently, which is worse than failing loudly. Filter on \`item_name\` instead.
+## There is no product filter on transactions
+The parameters ThriveCart documents on \`/transactions\` are \`page\`, \`perPage\`, \`query\`,
+\`transactionType\` and \`currency\`. \`product_id\` is not one of them, so passing it is a guess whose
+result nobody has promised. get_transactions filters on \`item_name\` after fetching instead.
 
 ## Identity
 Customers and affiliates have **no id**. Email is the identity, and lookups are POST, not GET.
 Orders and subscriptions do have ids, and those come from get_customer or get_transactions.
 
 ## What cannot be undone
-Cancelling a subscription ends access; the customer must buy again. A refund moves real money and
-there is no reverse. Pausing is the reversible option and usually the right one.`,
+Cancelling a subscription ends access; the customer must buy again. A refund is handed straight to
+the payment gateway and cannot be reversed there, so there is no undo. A refund also does not cancel
+anything: refund a subscription payment and that subscription keeps billing on its normal schedule.
+Pausing is the reversible option and usually the right one.`,
       },
     ],
   }));

@@ -1,6 +1,6 @@
-# thrivecart-mcp, for agents working on this repo
+# thrivecart-mcp-cli, for agents working on this repo
 
-TypeScript, ESM, Node >= 20. Published to npm as `@thenavidm/thrivecart-mcp`. Source on GitHub at `thenavidm/thrivecart-mcp`. The npm scope and the GitHub owner differ; that is correct, not a typo.
+TypeScript, ESM, Node >= 20. Published to npm as `@thenavidm/thrivecart-mcp-cli`. Source on GitHub at `thenavidm/thrivecart-mcp-cli`. Two binaries, `thrivecart-mcp` (the MCP server) and `thrivecart-cli` (the shell surface), both pointing at `dist/index.js`.
 
 ## Before changing anything
 
@@ -17,7 +17,7 @@ printf '%s\n%s\n' \
   | THRIVECART_API_KEY=x node dist/index.js
 ```
 
-22 tools. If that number changes, update it in `README.md`, `package.json` description, and `.github/workflows/ci.yml`, which asserts it.
+24 tools, 19 of them with `THRIVECART_READ_ONLY=1`. If either number changes, update it in `README.md`, the `package.json` description, `desktop-extension/manifest.json`, and `.github/workflows/ci.yml`, which asserts both. Read the count off the `commands (N)` header that `thrivecart-cli` prints; counting the listing lines with `grep -c` includes the header and gives one too many.
 
 ## Layout
 
@@ -29,13 +29,15 @@ printf '%s\n%s\n' \
 | `src/format/` | Normalising ThriveCart's inconsistent fields |
 | `src/tools/` | One module per group; `kit.ts` is the shared plumbing |
 | `src/transport/http.ts` | The `--http` server |
+| `src/cli.ts` | The shell surface, generated from `ALL_TOOLS` |
+| `desktop-extension/` | The `.mcpb` for Claude Desktop; `build.sh` vendors `node_modules` |
 
 A new tool goes in the matching `src/tools/` module via `defineTool`, then into `ALL_TOOLS`. `kit.ts` handles annotations, guarding and error shaping, so do not hand-roll those.
 
 ## Things that are decided
 
 - **Base URL is `thrivecart.com/api/external`.** Never `api.thrivecart.com`, which resolves and refuses everything.
-- **Never filter transactions by `product_id`.** ThriveCart's filter returns other products' rows, silently. Filter on `item_name`.
+- **Never filter transactions by `product_id`.** ThriveCart documents no product filter on `/transactions`; the parameters are `page`, `perPage`, `query`, `transactionType` and `currency`. Filter on `item_name`, here, after fetching.
 - **Money is integer cents.** Never accumulate floats. `src/format/transactions.ts` owns this.
 - **Field names vary.** `amount`/`total`, `date`/`created_at`, `item_name`/`product_name`. Read them through `format/transactions.ts`, never inline.
 - **Only `cancel_subscription` and `refund_transaction` are `destructive`.** Pausing is reversible. Do not add `confirm` to reversible tools; it trains the reflex the guard exists to prevent.
@@ -43,4 +45,4 @@ A new tool goes in the matching `src/tools/` module via `defineTool`, then into 
 
 ## House rules
 
-MIT, `Copyright (c) 2026 Navid Moazzez`. No AI attribution in commits, no `Co-Authored-By` trailers, no CONTRIBUTING file, no PR invitations. Never name another repo or project in anything published.
+MIT, `Copyright (c) 2026 Navid Moazzez`. No AI attribution in commits, no `Co-Authored-By` trailers, issues yes and pull requests no, as `CONTRIBUTING.md` says. Never name another repo or project in anything published.

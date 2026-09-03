@@ -2,11 +2,31 @@
 
 The README covers the happy path. This is for when it does not go that way.
 
+## Installing it
+
+Two ways, and they are not alternatives: the package ships both binaries either way.
+
+**As a shell command.**
+
+```bash
+npm install -g @thenavidm/thrivecart-mcp-cli
+thrivecart-cli            # lists all 24 commands
+thrivecart-cli --version
+```
+
+That puts `thrivecart-cli` and `thrivecart-mcp` on your `$PATH`. They are one program; the name you invoke it by decides what happens when you pass no arguments. If `thrivecart-cli` reports command not found afterwards, the global npm bin directory is not on `$PATH`: `npm bin -g` prints it.
+
+**As an MCP server**, with no install at all, because every client launches it through `npx`. The README has the block for each client.
+
+**As a Claude Desktop extension.** Download the `.mcpb` from the [latest release](https://github.com/thenavidm/thrivecart-mcp-cli/releases/latest) and double-click it. It carries its own `node_modules`, so nothing needs to be installed first, and Claude Desktop prompts for the token rather than making you edit JSON. Build it yourself with `npm run build:mcpb`.
+
 ## Getting an API key
 
 1. Sign in to ThriveCart.
-2. **Settings** → **API & Webhooks**.
-3. Create an API key, or copy the existing one.
+2. **Settings** → **API & webhooks** → **API tokens**.
+3. Create a token, or copy the existing one.
+
+That is the path ThriveCart names in [their own API documentation](https://developers.thrivecart.com/documentation/), word for word.
 
 There is no OAuth flow, no refresh, and no expiry. The key works until you regenerate it, at which point every client using the old one starts failing at once.
 
@@ -90,7 +110,7 @@ Narrowing the date range is almost always the better answer. Raising the ceiling
 ## Verifying
 
 ```bash
-THRIVECART_API_KEY=your-key npx -y @thenavidm/thrivecart-mcp@latest doctor
+THRIVECART_API_KEY=your-key npx -y @thenavidm/thrivecart-mcp-cli@latest doctor
 ```
 
 Exit code 0 means every check passed. Anything else and the output names what to fix.

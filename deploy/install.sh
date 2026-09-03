@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Add thrivecart-mcp to Claude Code in one command.
 #
-#   curl -fsSL https://raw.githubusercontent.com/thenavidm/thrivecart-mcp/main/deploy/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/thenavidm/thrivecart-mcp-cli/main/deploy/install.sh | bash
 #
 # Reads THRIVECART_API_KEY from the environment, or prompts for it.
 set -euo pipefail
@@ -32,7 +32,7 @@ if [ -z "$key" ]; then
 fi
 
 echo "Checking the key..."
-THRIVECART_API_KEY="$key" npx -y @thenavidm/thrivecart-mcp@latest doctor || {
+THRIVECART_API_KEY="$key" npx -y @thenavidm/thrivecart-mcp-cli@latest doctor || {
   echo "The key did not check out. Nothing was installed." >&2
   exit 1
 }
@@ -40,7 +40,7 @@ THRIVECART_API_KEY="$key" npx -y @thenavidm/thrivecart-mcp@latest doctor || {
 if command -v claude >/dev/null 2>&1; then
   claude mcp add thrivecart \
     -e "THRIVECART_API_KEY=$key" \
-    -- npx -y @thenavidm/thrivecart-mcp@latest
+    -- npx -y @thenavidm/thrivecart-mcp-cli@latest
   echo "Added. Run /mcp inside Claude Code to confirm."
 else
   echo
@@ -51,7 +51,7 @@ else
   "mcpServers": {
     "thrivecart": {
       "command": "npx",
-      "args": ["-y", "@thenavidm/thrivecart-mcp@latest"],
+      "args": ["-y", "@thenavidm/thrivecart-mcp-cli@latest"],
       "env": { "THRIVECART_API_KEY": "$key" }
     }
   }

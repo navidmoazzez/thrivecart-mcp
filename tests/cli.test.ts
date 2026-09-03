@@ -10,7 +10,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
-import { flagsFor, parseArgs, isCliCommand } from "../src/cli.js";
+import { flagsFor, parseArgs, isCliCommand, exitCodeFor, EXIT, selectFields } from "../src/cli.js";
 import { ALL_TOOLS } from "../src/tools/index.js";
 
 describe("flagsFor", () => {
@@ -188,5 +188,108 @@ describe("documentation stays in step with the code", () => {
       .map((m) => m[1] as string)
       .filter((a) => !slugs.has(a));
     expect(dead).toEqual([]);
+  });
+});
+
+/**
+ * Exit codes are the whole point of the CLI surface for a script: it branches
+ * on the number rather than reading prose. The three cases below were each
+ * wrong once, and each wrong in a way that sent the caller somewhere useless.
+ */
+describe("exitCodeFor", () => {
+  it("returns 10, not 4, when nothing is configured", () => {
+    // The message names an API key, so matching auth first sent someone who
+    // had configured nothing hunting for a revoked credential.
+    const e = new Error(
+      "No ThriveCart account configured. Set THRIVECART_API_KEY to an API key from ThriveCart Settings > API & Webhooks.",
+    );
+    expect(exitCodeFor(e)).toBe(EXIT.config);
+  });
+
+  it("still returns 4 when the API really did reject the key", () => {
+    expect(exitCodeFor(Object.assign(new Error("Unauthorized"), { status: 401 }))).toBe(EXIT.auth);
+  });
+
+  it("returns 2, not 5, for a write the guard refused", () => {
+    const e = new Error(
+      "refund_transaction moves money or ends a customer's access and cannot be undone, so it will not run without --confirm.",
+    );
+    expect(exitCodeFor(e)).toBe(EXIT.usage);
+  });
+
+  it("returns 2 for a tool hidden by read-only or destructive-off", () => {
+    expect(exitCodeFor(new Error("refund_transaction is unavailable: THRIVECART_READ_ONLY=1."))).toBe(
+      EXIT.usage,
+    );
+  });
+
+  it("keeps 3, 5 and 7 for not found, server errors and rate limits", () => {
+    expect(exitCodeFor(Object.assign(new Error("Not found"), { status: 404 }))).toBe(EXIT.notFound);
+    expect(exitCodeFor(Object.assign(new Error("Boom"), { status: 503 }))).toBe(EXIT.api);
+    expect(exitCodeFor(Object.assign(new Error("slow down"), { status: 429 }))).toBe(
+      EXIT.rateLimited,
+    );
+  });
+});
+
+describe("an array of enums", () => {
+  /**
+   * An enum element is a word you type, so it belongs with the scalars.
+   * Treated as JSON, `--status refunded` was rejected and you had to write
+   * `--status '"refunded"'` instead.
+   */
+  it("is a repeatable string flag, not JSON", () => {
+    const flags = flagsFor({ status: z.array(z.enum(["paid", "refunded"])).optional() });
+    expect(flags[0]).toMatchObject({ kind: "string", repeatable: true });
+  });
+
+  it("accepts a bare word, repeated", () => {
+    const flags = flagsFor({ status: z.array(z.enum(["paid", "refunded"])).optional() });
+    expect(parseArgs(["--status", "paid", "--status", "refunded"], flags)).toEqual({
+      status: ["paid", "refunded"],
+    });
+  });
+});
+
+/**
+ * Two paths under one head used to overwrite each other, so
+ * `--select orders.id,orders.total` quietly returned only the total. Silent
+ * data loss in a flag whose whole purpose is choosing what you keep, on a
+ * connector where the dropped field might be the amount.
+ */
+describe("--select keeps every path, not the last one", () => {
+  it("keeps both fields when two paths share a head", () => {
+    const data = { orders: [{ id: "9999", total: 4900, item_name: "Bundle" }] };
+    expect(selectFields(data, ["orders.id", "orders.total"])).toEqual({
+      orders: [{ id: "9999", total: 4900 }],
+    });
+  });
+
+  it("groups at every depth", () => {
+    expect(selectFields({ a: { b: { c: 1, d: 2, e: 3 } } }, ["a.b.c", "a.b.e"])).toEqual({
+      a: { b: { c: 1, e: 3 } },
+    });
+  });
+
+  it("mixes a scalar with nested paths", () => {
+    expect(selectFields({ x: 1, y: { z: 2, w: 3 } }, ["x", "y.z", "y.w"])).toEqual({
+      x: 1,
+      y: { z: 2, w: 3 },
+    });
+  });
+});
+
+/**
+ * A hardcoded VERSION drifts the moment a release bumps package.json and not
+ * the constant, and the two places it surfaces are `--version` and `doctor`:
+ * exactly where someone looks when they are already confused.
+ */
+describe("VERSION", () => {
+  it("comes from package.json, not a copy", async () => {
+    const { VERSION } = await import("../src/server.js");
+    const pkg = JSON.parse(
+      readFileSync(new URL("../package.json", import.meta.url), "utf-8"),
+    ) as { version: string };
+    expect(VERSION).toBe(pkg.version);
   });
 });
