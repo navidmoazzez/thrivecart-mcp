@@ -1,5 +1,9 @@
 # Versions
 
+## 2.2.2
+
+One dead link. The "you need a ThriveCart account" row pointed at a redirect on navid.me that was never set up and answered 404, which is a bad first impression on the one line telling somebody where to sign up. It points at thrivecart.com now. Every other link in every document was checked the same way.
+
 ## 2.2.1
 
 **`doctor` called an endpoint that does not exist.** It asked ThriveCart for `account`, which answers 501, so a perfectly valid API token was reported as `check failed` and the person went looking for a problem with their key. 2.1.0 moved `whoami` to `ping` and missed this one. Verified against the live API: `GET /ping` returns 200 with the account identity, `GET /account` returns 501.

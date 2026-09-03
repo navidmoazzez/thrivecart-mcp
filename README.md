@@ -139,7 +139,7 @@ Installing the package needs no account. Only connecting it does, which is the n
 | You need | Check with | If missing |
 |---|---|---|
 | Node 20 or newer | `node -v` | [nodejs.org](https://nodejs.org) |
-| A ThriveCart account | Open your ThriveCart dashboard | [thrivecart.com](https://navid.me/go/thrivecart/) |
+| A ThriveCart account | Open your ThriveCart dashboard | [thrivecart.com](https://thrivecart.com) |
 | An API key | Settings → API & Webhooks | See [section 3](#3-setup-) |
 
 ## 3. Setup 🔑
