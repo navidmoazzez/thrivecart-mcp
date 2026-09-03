@@ -1,4 +1,4 @@
-# Setup, the long version
+# Install
 
 The README covers the happy path. This is for when it does not go that way.
 
@@ -67,9 +67,11 @@ Configuring a second cart with the first cart's key. Both work, both return data
 | `THRIVECART_ALLOW_DESTRUCTIVE` | `1` | `0` blocks cancel and refund only |
 | `THRIVECART_AUDIT_LOG` | (none) | Path for a write log, mode `0600` |
 | `THRIVECART_REQUEST_TIMEOUT_MS` | `30000` | Per-request deadline |
-| `THRIVECART_MIN_REQUEST_INTERVAL_MS` | `120` | Spacing between requests |
+| `THRIVECART_MIN_REQUEST_INTERVAL_MS` | `1000` | Spacing between requests |
 | `THRIVECART_MAX_RETRIES` | `3` | Retries on 429 and 5xx |
 | `THRIVECART_MAX_PAGES` | `100` | Ceiling when walking transactions |
+| `THRIVECART_BASE_URL` | `https://thrivecart.com/api/external` | Override the API host, for a proxy or a test |
+| `THRIVECART_USER_AGENT` | `thrivecart-mcp` | Override the User-Agent sent to ThriveCart |
 | `THRIVECART_HTTP_PORT` | `8788` | For `--http` |
 | `THRIVECART_HTTP_HOST` | `127.0.0.1` | For `--http` |
 | `THRIVECART_HTTP_TOKEN` | (none) | Bearer token required by `--http` |

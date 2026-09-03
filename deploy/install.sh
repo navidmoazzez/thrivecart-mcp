@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Add thrivecart-mcp to Claude Code in one command.
 #
-#   curl -fsSL https://raw.githubusercontent.com/navidmoazzez/thrivecart-mcp/main/deploy/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/thenavidm/thrivecart-mcp/main/deploy/install.sh | bash
 #
 # Reads THRIVECART_API_KEY from the environment, or prompts for it.
 set -euo pipefail

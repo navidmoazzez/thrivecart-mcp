@@ -1,6 +1,6 @@
 # thrivecart-mcp, for agents working on this repo
 
-TypeScript, ESM, Node >= 20. Published to npm as `@thenavidm/thrivecart-mcp`. Source on GitHub at `navidmoazzez/thrivecart-mcp`. The npm scope and the GitHub owner differ; that is correct, not a typo.
+TypeScript, ESM, Node >= 20. Published to npm as `@thenavidm/thrivecart-mcp`. Source on GitHub at `thenavidm/thrivecart-mcp`. The npm scope and the GitHub owner differ; that is correct, not a typo.
 
 ## Before changing anything
 

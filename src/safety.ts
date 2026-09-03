@@ -31,15 +31,32 @@ export type Risk =
   /** Moves money or ends access, and cannot be undone from here. */
   | "destructive";
 
+/**
+ * Which surface is asking.
+ *
+ * The two surfaces spell the same confirmation differently: an MCP client puts
+ * `confirm: true` in the arguments, a person at a terminal types `--confirm`.
+ * A refusal that names the wrong one sends the caller hunting for a flag that
+ * does not exist where they are standing.
+ */
+export type Surface = "mcp" | "cli";
+
 export class WriteGuard {
   private readonly config: Config;
+  private readonly surface: Surface;
 
-  constructor(config: Config) {
+  constructor(config: Config, surface: Surface = "mcp") {
     this.config = config;
+    this.surface = surface;
   }
 
   get readOnly(): boolean {
     return this.config.readOnly;
+  }
+
+  /** How this surface spells the confirmation, for the refusal message. */
+  private get confirmFlag(): string {
+    return this.surface === "cli" ? "--confirm" : "confirm: true";
   }
 
   check(tool: string, risk: Risk, confirm: boolean | undefined, summary: string): void {
@@ -62,7 +79,7 @@ export class WriteGuard {
       if (confirm !== true) {
         this.audit(tool, summary, "blocked: no confirm");
         throw new WriteBlockedError(
-          `${tool} moves money or ends a customer's access and cannot be undone, so it will not run without confirm: true. About to: ${summary}. Call again with confirm: true if that is what was asked for.`,
+          `${tool} moves money or ends a customer's access and cannot be undone, so it will not run without ${this.confirmFlag}. About to: ${summary}. Call again with ${this.confirmFlag} if that is what was asked for.`,
         );
       }
     }

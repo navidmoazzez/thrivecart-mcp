@@ -101,7 +101,7 @@ ThriveCart rate limits the API to **60 requests per minute, per account**. This 
 
 ## 4. Connect your client 🔌
 
-The long version, every step with what to do when one fails, is in [references/setup.md](references/setup.md).
+The long version, every step with what to do when one fails, is in [INSTALL.md](INSTALL.md).
 
 Every block below is complete on its own. Pick your client, paste, done.
 
@@ -169,7 +169,7 @@ Zed, Cline, Continue and any other MCP client over stdio all work. They each wan
 ```bash
 docker run -i --rm \
   -e THRIVECART_API_KEY=your-api-key \
-  ghcr.io/navidmoazzez/thrivecart-mcp:latest
+  ghcr.io/thenavidm/thrivecart-mcp:latest
 ```
 
 ### Self-hosted over HTTP
@@ -393,7 +393,7 @@ Every client using the old one starts failing at once, because there is no refre
 
 ## Questions
 
-Run into a problem or have a question? [Open an issue](https://github.com/navidmoazzez/thrivecart-mcp/issues) and I will help.
+Run into a problem or have a question? [Open an issue](https://github.com/thenavidm/thrivecart-mcp/issues) and I will help.
 
 ## About the author 👋
 
@@ -420,7 +420,7 @@ If this is useful, star the repo and come say hi on [X](https://x.com/thenavidm)
 
 ## Security 🛡️
 
-Found a vulnerability? [Report it privately](https://github.com/navidmoazzez/thrivecart-mcp/security/advisories/new), not as a public issue. [SECURITY.md](SECURITY.md) covers what this server holds, the write-safety model, and running it over HTTP.
+Found a vulnerability? [Report it privately](https://github.com/thenavidm/thrivecart-mcp/security/advisories/new), not as a public issue. [SECURITY.md](SECURITY.md) covers what this server holds, the write-safety model, and running it over HTTP.
 
 ## License ⚖️
 

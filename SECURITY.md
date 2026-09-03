@@ -2,7 +2,7 @@
 
 ## Reporting
 
-Found a vulnerability? [Report it privately](https://github.com/navidmoazzez/thrivecart-mcp/security/advisories/new). Not as a public issue.
+Found a vulnerability? [Report it privately](https://github.com/thenavidm/thrivecart-mcp/security/advisories/new). Not as a public issue.
 
 ## What this server holds
 
