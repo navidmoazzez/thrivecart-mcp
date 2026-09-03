@@ -64,16 +64,23 @@ export async function runDoctor(): Promise<number> {
 
   for (const account of config.accounts) {
     try {
-      const data = (await client.get(account, "account")) as Record<string, unknown>;
-      const identity =
-        (typeof data.email === "string" && data.email) ||
-        (typeof data.username === "string" && data.username) ||
-        (typeof data.name === "string" && data.name) ||
-        "";
+      // `ping` is the endpoint that identifies a key, and it is the one
+      // `whoami` uses. This called `account`, which ThriveCart answers 501 to,
+      // so a perfectly good key was reported as "check failed".
+      const data = (await client.get(account, "ping")) as Record<string, unknown>;
+      // `account_id` is what decides whether two configured carts are really
+      // one, because it is the only field guaranteed unique per cart. The name
+      // is only for the human reading the line.
+      const str = (v: unknown): string => (typeof v === "string" && v ? v : "");
+      const identity = str(data.account_id);
+      const label =
+        [str(data.account_name), identity && `#${identity}`].filter(Boolean).join(" ") ||
+        str(data.user_username) ||
+        identity;
 
       checks.push({
         ok: true,
-        label: `${account.name}: key valid${identity ? ` (${identity})` : ""}`,
+        label: `${account.name}: key valid${label ? ` (${label})` : ""}`,
       });
 
       if (identity) {
@@ -82,7 +89,7 @@ export async function runDoctor(): Promise<number> {
           checks.push({
             ok: false,
             label: `${account.name} and ${clash} are the same cart`,
-            detail: `Both keys resolve to ${identity}. One of them is wrong, and leaving it will double-count revenue when both are queried.`,
+            detail: `Both keys resolve to ThriveCart account ${identity}. One of them is wrong, and leaving it will double-count revenue when both are queried.`,
           });
         } else {
           seenAccounts.set(identity, account.name);

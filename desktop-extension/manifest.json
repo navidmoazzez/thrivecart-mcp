@@ -2,22 +2,36 @@
   "manifest_version": "0.2",
   "name": "thrivecart",
   "display_name": "ThriveCart",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "ThriveCart MCP server and CLI for Claude Code and AI agents. 24 tools for products, offers, transactions, revenue, customers, subscriptions and affiliates, across several carts at once.",
   "long_description": "Connects Claude to ThriveCart.\n\nThere is no OAuth app to register. An API token from Settings, then API & webhooks, then API tokens is the whole setup.\n\nOne token reaches exactly one cart, so several carts means several tokens. Configure them as a JSON array and every tool takes an account argument, so figures from one cart are never silently added to another.\n\nThis touches money and customer records. refund_transaction moves real funds and cancel_subscription ends a customer's access; both refuse to run without an explicit confirmation, and neither can be undone from here. Turn Read only on to remove every write from the tool list.",
-  "author": { "name": "Navid Moazzez", "url": "https://navid.me" },
-  "repository": { "type": "git", "url": "https://github.com/thenavidm/thrivecart-mcp-cli" },
+  "author": {
+    "name": "Navid Moazzez",
+    "url": "https://navid.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thenavidm/thrivecart-mcp-cli"
+  },
   "homepage": "https://github.com/thenavidm/thrivecart-mcp-cli",
   "documentation": "https://github.com/thenavidm/thrivecart-mcp-cli#readme",
   "support": "https://github.com/thenavidm/thrivecart-mcp-cli/issues",
   "license": "MIT",
-  "keywords": ["thrivecart", "ecommerce", "checkout", "subscriptions", "mcp"],
+  "keywords": [
+    "thrivecart",
+    "ecommerce",
+    "checkout",
+    "subscriptions",
+    "mcp"
+  ],
   "server": {
     "type": "node",
     "entry_point": "server/index.js",
     "mcp_config": {
       "command": "node",
-      "args": ["${__dirname}/server/index.js"],
+      "args": [
+        "${__dirname}/server/index.js"
+      ],
       "env": {
         "THRIVECART_API_KEY": "${user_config.api_key}",
         "THRIVECART_ACCOUNT_NAME": "${user_config.account_name}",
@@ -58,7 +72,13 @@
   },
   "compatibility": {
     "claude_desktop": ">=0.10.0",
-    "platforms": ["darwin", "win32", "linux"],
-    "runtimes": { "node": ">=20" }
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=20"
+    }
   }
 }

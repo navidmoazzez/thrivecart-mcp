@@ -1,5 +1,11 @@
 # Versions
 
+## 2.2.1
+
+**`doctor` called an endpoint that does not exist.** It asked ThriveCart for `account`, which answers 501, so a perfectly valid API token was reported as `check failed` and the person went looking for a problem with their key. 2.1.0 moved `whoami` to `ping` and missed this one. Verified against the live API: `GET /ping` returns 200 with the account identity, `GET /account` returns 501.
+
+The line it prints now names the cart ThriveCart says the token belongs to, as `navid #3014`, so a cart name you chose that points somewhere else is visible rather than assumed. The duplicate-cart check keys on `account_id`, which is the field that is actually unique per cart.
+
 ## 2.2.0
 
 **A CLI, alongside the MCP server.** Every one of the 24 tools is now a shell command under the same name with dashes, generated from the same `ALL_TOOLS` array the server registers, through the same handlers and the same write guard. Nothing is described twice, so a tool added tomorrow is a command tomorrow.

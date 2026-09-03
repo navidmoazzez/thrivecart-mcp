@@ -251,20 +251,24 @@ THRIVECART_API_KEY=your-api-key npx -y @thenavidm/thrivecart-mcp-cli@latest doct
 `doctor` is reachable from either binary, so `thrivecart-cli doctor` works the same way. It checks each cart separately and reports the fix, not the status code:
 
 ```
-thrivecart-mcp 2.2.0
+thrivecart-mcp 2.2.1
 
   ok   2 accounts configured: navid-media, students
-  ok   navid-media: key valid (hello@navid.media)
-  ok   navid-media: products readable (14)
-  ok   students: key valid (students@navid.media)
+  ok   navid-media: key valid (navid #3014)
+  ok   navid-media: products readable (61)
+  ok   students: key valid (students #4180)
   ok   students: products readable (3)
 ```
+
+The name and number in brackets come from ThriveCart itself, so a name you chose
+that points at the wrong cart is visible rather than assumed. Exit code 0 means
+every line said ok.
 
 The two failures people actually hit:
 
 | Symptom | Cause |
 |---|---|
-| `key rejected` | The account password was pasted instead of an API key from Settings → API & Webhooks |
+| `key rejected` | The account password was pasted instead of an API token from Settings → API & webhooks → API tokens |
 | `navid-media and students are the same cart` | The second cart was configured with the first cart's key. Left alone, this double-counts revenue |
 
 ## 6. Output and exit codes 🔢
